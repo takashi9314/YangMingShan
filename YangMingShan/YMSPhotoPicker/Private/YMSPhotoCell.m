@@ -135,13 +135,13 @@ static const CGFloat YMSUnhightedAnimationSpringVelocity = 6.0;
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
 {
     if (!animated) {
-        self.selectionCheckImage.image = selected ? [UIImage imageNamed:@"ImageCheck"] : nil;
+        self.selectionCheckImage.image = selected ? [UIImage imageNamed:@"memo_checkmark"] : nil;
         self.enableSelectionIndicatorViewVisibility = selected;
     }
     else {
         self.enableSelectionIndicatorViewVisibility = YES;
         [UIView animateWithDuration:0.2 delay:0.0 options:UIViewAnimationOptionBeginFromCurrentState animations:^{
-            self.selectionCheckImage.image = selected ? [UIImage imageNamed:@"ImageCheck"] : nil;
+            self.selectionCheckImage.image = selected ? [UIImage imageNamed:@"memo_checkmark"] : nil;
         } completion:^(BOOL finished) {
             self.enableSelectionIndicatorViewVisibility = selected;
         }];
