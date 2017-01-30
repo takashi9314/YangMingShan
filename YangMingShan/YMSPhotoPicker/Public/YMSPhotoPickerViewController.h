@@ -41,11 +41,6 @@
  *  @brief Use this property to customize the returned item type for single selection. YES for UIImage, NO for PHAsset. Default value is YES.
  */
 @property (nonatomic, assign) BOOL shouldReturnImageForSingleSelection;
-
-/**
- *  @brief Use this property to set Header Title For Picker CollectionView. Default value is nil and set value to show header.
- */
-@property (nonatomic, assign) NSString * pickerHeaderTitle;
     
 @end
 

@@ -65,7 +65,6 @@ static const CGFloat YMSPhotoFetchScaleResizingRatio = 0.75;
         self.selectedPhotos = [NSMutableArray array];
         self.numberOfPhotoToSelect = 1;
         self.shouldReturnImageForSingleSelection = YES;
-        self.pickerHeaderTitle = @"じじじ";
     }
     return self;
 }
@@ -192,7 +191,7 @@ static const CGFloat YMSPhotoFetchScaleResizingRatio = 0.75;
     
 - (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath
 {
-    if (kind == UICollectionElementKindSectionFooter || self.pickerHeaderTitle.length < 1) {
+    if (kind == UICollectionElementKindSectionFooter) {
         return nil;
     }
     
@@ -325,9 +324,6 @@ static const CGFloat YMSPhotoFetchScaleResizingRatio = 0.75;
     
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section
 {
-    if (self.pickerHeaderTitle.length < 1) {
-        return CGSizeZero;
-    }
     return CGSizeMake(CGRectGetWidth(collectionView.frame), 40.f);
 }
 

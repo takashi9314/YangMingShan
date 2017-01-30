@@ -21,13 +21,12 @@ static const CGFloat YMSUnhightedAnimationSpringVelocity = 6.0;
 @interface YMSPhotoCell()
 
 @property (nonatomic, weak) IBOutlet UIImageView *imageView;
-@property (nonatomic, weak) IBOutlet UIView *selectionVeil;
 @property (nonatomic, assign) BOOL enableSelectionIndicatorViewVisibility;
 @property (nonatomic, weak) PHImageManager *imageManager;
 @property (nonatomic, assign) PHImageRequestID imageRequestID;
 @property (nonatomic, assign) BOOL animateSelection;
 @property (nonatomic, assign, getter=isAnimatingHighlight) BOOL animateHighlight;
-@property (nonatomic, weak) IBOutlet UILabel *selectionOrderLabel;
+@property (nonatomic, weak) IBOutlet UIImageView *selectionCheckImage;
 @property (nonatomic, strong) UIImage *thumbnailImage;
 
 - (void)cancelImageRequest;
@@ -44,13 +43,9 @@ static const CGFloat YMSUnhightedAnimationSpringVelocity = 6.0;
     self.longPressGestureRecognizer = [[UILongPressGestureRecognizer alloc] init];
     [self addGestureRecognizer:self.longPressGestureRecognizer];
 
-    self.selectionOrderLabel.textColor = [YMSPhotoPickerTheme sharedInstance].orderLabelTextColor;
-    self.selectionOrderLabel.font = [YMSPhotoPickerTheme sharedInstance].selectionOrderLabelFont;
-
-    self.selectionVeil.layer.borderWidth = 4.0;
-
-    self.selectionOrderLabel.backgroundColor = [YMSPhotoPickerTheme sharedInstance].orderTintColor;
-    self.selectionVeil.layer.borderColor = [YMSPhotoPickerTheme sharedInstance].orderTintColor.CGColor;
+    self.selectionCheckImage.layer.cornerRadius = CGRectGetWidth(self.selectionCheckImage.frame) / 2.f;
+    self.selectionCheckImage.layer.borderWidth = 1.f;
+    self.selectionCheckImage.layer.borderColor = [UIColor whiteColor].CGColor;
 
     [self prepareForReuse];
 }
@@ -63,8 +58,6 @@ static const CGFloat YMSUnhightedAnimationSpringVelocity = 6.0;
 
     self.imageView.image = nil;
     self.enableSelectionIndicatorViewVisibility = NO;
-    self.selectionVeil.alpha = 0.0;
-    self.selectionOrderLabel.alpha = 0.0;
 }
 
 - (void)setSelected:(BOOL)selected {
@@ -76,7 +69,7 @@ static const CGFloat YMSUnhightedAnimationSpringVelocity = 6.0;
 - (void)setSelectionOrder:(NSUInteger)selectionOrder
 {
     _selectionOrder = selectionOrder;
-    self.selectionOrderLabel.text = [NSString stringWithFormat:@"%zd", selectionOrder];
+    self.selectionCheckImage.image = [UIImage imageNamed:@"ImageCheck"];
 }
 
 - (void)dealloc
@@ -142,15 +135,13 @@ static const CGFloat YMSUnhightedAnimationSpringVelocity = 6.0;
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
 {
     if (!animated) {
-        self.selectionVeil.alpha = selected ? 1.0 : 0.0;
-        self.selectionOrderLabel.alpha = selected ? 1.0 : 0.0;
+        self.selectionCheckImage.image = selected ? [UIImage imageNamed:@"ImageCheck"] : nil;
         self.enableSelectionIndicatorViewVisibility = selected;
     }
     else {
         self.enableSelectionIndicatorViewVisibility = YES;
         [UIView animateWithDuration:0.2 delay:0.0 options:UIViewAnimationOptionBeginFromCurrentState animations:^{
-            self.selectionVeil.alpha = selected ? 1.0 : 0.0;
-            self.selectionOrderLabel.alpha = selected ? 1.0 : 0.0;
+            self.selectionCheckImage.image = selected ? [UIImage imageNamed:@"ImageCheck"] : nil;
         } completion:^(BOOL finished) {
             self.enableSelectionIndicatorViewVisibility = selected;
         }];
