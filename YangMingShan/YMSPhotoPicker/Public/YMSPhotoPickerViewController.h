@@ -42,6 +42,11 @@
  */
 @property (nonatomic, assign) BOOL shouldReturnImageForSingleSelection;
 
+/**
+ *  @brief Use this property to set Header Title For Picker CollectionView. Default value is nil and set value to show header.
+ */
+@property (nonatomic, assign) NSString * pickerHeaderTitle;
+    
 @end
 
 /**

@@ -60,6 +60,7 @@
 		519140DF1D05571A002B4C5B /* YMSPhotoPickerAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 51F2EEE81CEC4D5F006DFC4B /* YMSPhotoPickerAssets.xcassets */; };
 		51F2EEE91CEC4D5F006DFC4B /* YMSPhotoPickerAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 51F2EEE81CEC4D5F006DFC4B /* YMSPhotoPickerAssets.xcassets */; };
 		51FF32391D129D020029197B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 51FF32291D129D020029197B /* Assets.xcassets */; };
+		EB90CCA81E3F4ECB0052F09C /* YMSPickerHeaderTitleView.m in Sources */ = {isa = PBXBuildFile; fileRef = EB90CCA71E3F4ECB0052F09C /* YMSPickerHeaderTitleView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -137,6 +138,8 @@
 		51F2EEE81CEC4D5F006DFC4B /* YMSPhotoPickerAssets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = YMSPhotoPickerAssets.xcassets; sourceTree = "<group>"; };
 		51FF32291D129D020029197B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		51FF322B1D129D020029197B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		EB90CCA61E3F4ECB0052F09C /* YMSPickerHeaderTitleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = YMSPickerHeaderTitleView.h; path = Private/YMSPickerHeaderTitleView.h; sourceTree = "<group>"; };
+		EB90CCA71E3F4ECB0052F09C /* YMSPickerHeaderTitleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = YMSPickerHeaderTitleView.m; path = Private/YMSPickerHeaderTitleView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -298,6 +301,8 @@
 				5130732B1D1B8D9000C98705 /* YMSSinglePhotoViewController.h */,
 				5130732C1D1B8D9000C98705 /* YMSSinglePhotoViewController.m */,
 				5130732D1D1B8D9000C98705 /* YMSSinglePhotoViewController.xib */,
+				EB90CCA61E3F4ECB0052F09C /* YMSPickerHeaderTitleView.h */,
+				EB90CCA71E3F4ECB0052F09C /* YMSPickerHeaderTitleView.m */,
 			);
 			name = YMSPhotoPicker;
 			path = YangMingShan/YMSPhotoPicker;
@@ -511,6 +516,7 @@
 			files = (
 				511BC60F1D13B2C400738FD4 /* DemoImageViewCell.m in Sources */,
 				5130732E1D1B8D9000C98705 /* UIScrollView+YMSAdditions.m in Sources */,
+				EB90CCA81E3F4ECB0052F09C /* YMSPickerHeaderTitleView.m in Sources */,
 				513073361D1B8D9000C98705 /* YMSPhotoCell.m in Sources */,
 				511BC6051D13B27400738FD4 /* AppDelegate.m in Sources */,
 				511BC6101D13B2C400738FD4 /* DemoPhotoViewController.m in Sources */,

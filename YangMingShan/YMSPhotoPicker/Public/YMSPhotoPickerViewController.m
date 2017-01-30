@@ -16,9 +16,11 @@
 #import "YMSCameraCell.h"
 #import "YMSPhotoCell.h"
 #import "YMSSinglePhotoViewController.h"
+#import "YMSPickerHeaderTitleView.h"
 
 static NSString * const YMSCameraCellNibName = @"YMSCameraCell";
 static NSString * const YMSPhotoCellNibName = @"YMSPhotoCell";
+static NSString * const YMSHeaderClassName = @"YMSPickerHeaderTitleView";
 static const NSUInteger YMSNumberOfPhotoColumns = 3;
 static const CGFloat YMSNavigationBarMaxTopSpace = 44.0;
 static const CGFloat YMSNavigationBarOriginalTopSpace = 0.0;
@@ -39,6 +41,7 @@ static const CGFloat YMSPhotoFetchScaleResizingRatio = 0.75;
 @property (nonatomic, assign) BOOL needToSelectFirstPhoto;
 @property (nonatomic, assign) CGSize cellPortraitSize;
 @property (nonatomic, assign) CGSize cellLandscapeSize;
+@property (nonatomic, strong) UILabel *collectionHeaderLabel;
 
 - (IBAction)dismiss:(id)sender;
 - (IBAction)presentAlbumPickerView:(id)sender;
@@ -62,6 +65,7 @@ static const CGFloat YMSPhotoFetchScaleResizingRatio = 0.75;
         self.selectedPhotos = [NSMutableArray array];
         self.numberOfPhotoToSelect = 1;
         self.shouldReturnImageForSingleSelection = YES;
+        self.pickerHeaderTitle = @"じじじ";
     }
     return self;
 }
@@ -82,6 +86,7 @@ static const CGFloat YMSPhotoFetchScaleResizingRatio = 0.75;
     [self.photoCollectionView registerNib:cellNib forCellWithReuseIdentifier:YMSCameraCellNibName];
     cellNib = [UINib nibWithNibName:YMSPhotoCellNibName bundle:[NSBundle bundleForClass:YMSPhotoCell.class]];
     [self.photoCollectionView registerNib:cellNib forCellWithReuseIdentifier:YMSPhotoCellNibName];
+    [self.photoCollectionView registerClass:[YMSPickerHeaderTitleView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:YMSHeaderClassName];
     self.photoCollectionView.allowsMultipleSelection = self.allowsMultipleSelection;
 
     [self fetchCollections];
@@ -184,6 +189,18 @@ static const CGFloat YMSPhotoFetchScaleResizingRatio = 0.75;
 
     return photoCell;
 }
+    
+- (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath
+{
+    if (kind == UICollectionElementKindSectionFooter || self.pickerHeaderTitle.length < 1) {
+        return nil;
+    }
+    
+    YMSPickerHeaderTitleView * header = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:YMSHeaderClassName forIndexPath:indexPath];
+    self.collectionHeaderLabel = header.headerLabel;
+    [self setupHeaderTitle];
+    return header;
+}
 
 #pragma mark - UICollectionViewDelegate
 
@@ -248,6 +265,7 @@ static const CGFloat YMSPhotoFetchScaleResizingRatio = 0.75;
         [self.selectedPhotos addObject:asset];
         self.doneItem.enabled = YES;
     }
+    [self setupHeaderTitle];
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didUnhighlightItemAtIndexPath:(NSIndexPath *)indexPath {
@@ -288,6 +306,7 @@ static const CGFloat YMSPhotoFetchScaleResizingRatio = 0.75;
     if (self.selectedPhotos.count == 0) {
         self.doneItem.enabled = NO;
     }
+    [self setupHeaderTitle];
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
@@ -302,6 +321,14 @@ static const CGFloat YMSPhotoFetchScaleResizingRatio = 0.75;
         return self.cellLandscapeSize;
     }
     return self.cellPortraitSize;
+}
+    
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section
+{
+    if (self.pickerHeaderTitle.length < 1) {
+        return CGSizeZero;
+    }
+    return CGSizeMake(CGRectGetWidth(collectionView.frame), 40.f);
 }
 
 #pragma mark - IBActions
@@ -579,6 +606,12 @@ static const CGFloat YMSPhotoFetchScaleResizingRatio = 0.75;
     totalHorizontalSpacing = totalInteritemSpacing + sectionInset.left + sectionInset.right;
     size = (CGFloat)floor((arrangementLength - totalHorizontalSpacing) / numberOfPhotoColumnsInLandscape);
     self.cellLandscapeSize = CGSizeMake(size, size);
+}
+    
+- (void)setupHeaderTitle
+{
+    NSInteger selectableNumber = self.numberOfPhotoToSelect - self.selectedPhotos.count;
+    self.collectionHeaderLabel.text = [NSString stringWithFormat:@"写真をあと%ld枚選択できます",(long)selectableNumber];
 }
 
 #pragma mark - PHPhotoLibraryChangeObserver
