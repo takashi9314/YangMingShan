@@ -55,8 +55,7 @@ static const CGFloat YMSUnhightedAnimationSpringVelocity = 6.0;
     [super prepareForReuse];
 
     [self cancelImageRequest];
-
-    self.imageView.image = nil;
+    [self setSelected:self.isSelected animated:NO];
     self.enableSelectionIndicatorViewVisibility = NO;
 }
 
@@ -69,7 +68,7 @@ static const CGFloat YMSUnhightedAnimationSpringVelocity = 6.0;
 - (void)setSelectionOrder:(NSUInteger)selectionOrder
 {
     _selectionOrder = selectionOrder;
-    self.selectionCheckImage.image = [UIImage imageNamed:@"ImageCheck"];
+    self.selectionCheckImage.image = [UIImage imageNamed:@"memo_checkmark"];
 }
 
 - (void)dealloc
